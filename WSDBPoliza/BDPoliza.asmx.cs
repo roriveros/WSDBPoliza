@@ -18,7 +18,7 @@ namespace WSDBPoliza
         public DataSet GetData()
         {
             SqlConnection conn = new SqlConnection();
-            conn.ConnectionString = "Data Source=Rodrigothrash; Initial Catalog=rodrigoontour; user=c##pablo; pass=pablo1234;";
+            conn.ConnectionString = "Data Source=RODRIGOTHRASH; Initial Catalog=rodrigoontour; Integrated Security=True; user=c##pablo; password=pablo1234;";
             SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM POLIZASEGURO", conn);
             DataSet ds = new DataSet();
             da.Fill(ds);
