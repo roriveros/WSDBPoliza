@@ -9,6 +9,7 @@
 <body>
     <form id="form1" runat="server">
         Bienvenido a la plagina que te muestra las polizas de seguros asociadas<br />
+        <br />
         <asp:GridView ID="GridView1" runat="server" Width="316px">
         </asp:GridView>
         <br />

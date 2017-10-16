@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Services;
 using System.Data.SqlClient;
+using Oracle.ManagedDataAccess.Client; // ODP.NET Oracle managed provider
 namespace WSDBPoliza
 {
     
@@ -13,16 +14,52 @@ namespace WSDBPoliza
     [System.ComponentModel.ToolboxItem(false)]
     public class BDPoliza : System.Web.Services.WebService
     {
+        public OracleConnection GetConnection()
+        {
+            string connection = System.Configuration.ConfigurationManager.AppSettings["connectionString"].ToString();
+
+            return new OracleConnection(connection);
+        }
 
         [WebMethod]
         public DataSet GetData()
         {
-            SqlConnection conn = new SqlConnection();
-            conn.ConnectionString = "Data Source=RODRIGOTHRASH; Initial Catalog=rodrigoontour; Integrated Security=True; user=c##pablo; password=pablo1234;";
-            SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM POLIZASEGURO", conn);
-            DataSet ds = new DataSet();
-            da.Fill(ds);
-            return ds;
+            OracleConnection cn = new OracleConnection();
+            OracleCommand dbCommand = cn.CreateCommand();
+            DataSet dataset = new DataSet();
+
+            cn = GetConnection();
+
+            dbCommand.CommandText = "SELECT * FROM POLIZASEGURO";
+            dbCommand.CommandType = CommandType.Text;
+
+            try
+            {
+                dbCommand.Connection = cn;
+                OracleDataAdapter adapter = new OracleDataAdapter(dbCommand);
+                adapter.Fill(dataset);
+
+                return dataset;
+            }
+            catch (Exception ex)
+            {
+                if (cn.State == ConnectionState.Open)
+                {
+                    cn.Close();
+                }
+                dbCommand.Dispose();
+                cn.Dispose();
+                throw ex;
+            }
+            finally
+            {
+                if (cn.State == ConnectionState.Open)
+                {
+                    cn.Close();
+                }
+                dbCommand.Dispose();
+                cn.Dispose();
+            }
         }
     }
 }
