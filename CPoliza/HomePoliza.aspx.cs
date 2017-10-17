@@ -12,10 +12,19 @@ namespace CPoliza
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            updateGridView();
+        }
+        public void updateGridView()
+        {
             WSDBPoliza.BDPolizaSoapClient ws = new WSDBPoliza.BDPolizaSoapClient();
+
             DataSet ds = ws.GetData();
             GridView1.DataSource = ds.Tables[0];
             GridView1.DataBind();
+        }
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            updateGridView();
         }
     }
 }
