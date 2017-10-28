@@ -9,11 +9,9 @@
     <form id="form1" runat="server">
         Bienvenido a la plagina que te muestra las polizas de seguros asociadas<br />
         <br />
-        <asp:GridView ID="GridView1" runat="server" Width="316px"
-            EmptyDataText="No hay Polizas para mostrar!!!">
+        <asp:GridView ID="GridView1" runat="server" Width="316px">
         </asp:GridView>
         <br />
-        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Actualizar Datos" Width="130px" />
         <br />
     </form>
 </body>
